@@ -5,5 +5,6 @@ public class Constants {
             INITIAL_DATA = "initialData",
             FINAL_DATA = "finalData",
             MIN_VALUE = "minValue",
-            MAX_VALUE = "maxValue";
+            MAX_VALUE = "maxValue",
+            COUNT_VAlUE = "countValue";
 }
