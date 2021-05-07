@@ -1,5 +1,6 @@
 package com.example.intentsplayground;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,12 +18,18 @@ public class IntentPlaygroundActivity extends AppCompatActivity {
 
     ActivityIntentPlaygroundBinding b;
 
+    int finalCountValue = Integer.MIN_VALUE;
+    private static final String FINAL_COUNT_VALUE = "finalCountValue";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Initialize binding
         setupLayout();
+        //Handel configuration change
+        handelConfigurationChanges(savedInstanceState);
+
+        loadSharedPreference();
 
         //Initialize Explicit Intent
         setupExplicitIntent();
@@ -32,6 +39,35 @@ public class IntentPlaygroundActivity extends AppCompatActivity {
 
         //Send data
         sendDataToMainActivity();
+
+
+    }
+
+    /**
+     *
+     * @param savedInstanceState load data from bundle
+     */
+    private void handelConfigurationChanges(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            finalCountValue = savedInstanceState.getInt(FINAL_COUNT_VALUE);
+            if (finalCountValue != Integer.MIN_VALUE) {
+                b.finalData.setText("The final count value is " + finalCountValue);
+                b.finalData.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    /**
+     * Get data from sharedPreference
+     */
+    private void loadSharedPreference() {
+        SharedPreferences sharedPreferences=getPreferences(MODE_PRIVATE);
+
+        //update views
+        b.data.setText(sharedPreferences.getString(Constants.DATA,""));
+        b.radioGroup.check(sharedPreferences.getInt(Constants.RADIO_BUTTON_CHECK,0));
+        b.sendData.setText(sharedPreferences.getString(Constants.EDT_INITIAL_COUNT_VALUE,""));
+
     }
 
     /**
@@ -178,18 +214,36 @@ public class IntentPlaygroundActivity extends AppCompatActivity {
     private void hideError() {
         b.data.setError(null);
     }
+
     /**
-     *
-     * @param requestCode   code of the request made
-     * @param resultCode    code of the result
-     * @param data          data which is coming back in the form of result
+     * @param requestCode code of the request made
+     * @param resultCode  code of the result
+     * @param data        data which is coming back in the form of result
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_COUNT && resultCode == RESULT_OK) {
-            b.finalData.setText("The final count value is " + data.getIntExtra(Constants.FINAL_DATA, 0));
+            finalCountValue = data.getIntExtra(Constants.FINAL_DATA, 0);
+            b.finalData.setText("The final count value is " + finalCountValue);
             b.finalData.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //save data
+        outState.putInt(FINAL_COUNT_VALUE, finalCountValue);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //update sharedPreferences
+        getPreferences(MODE_PRIVATE).edit()
+                .putString(Constants.DATA, b.data.getText().toString().trim())
+                .putInt(Constants.RADIO_BUTTON_CHECK, b.radioGroup.getCheckedRadioButtonId())
+                .putString(Constants.EDT_INITIAL_COUNT_VALUE, b.sendData.getText().toString().trim()).apply();
     }
 }

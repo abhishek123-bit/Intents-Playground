@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
 
         sharedPreferences = getPreferences(MODE_PRIVATE);
 
-
         //event handler
         eventHandler();
         //Receive data
@@ -37,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         sendDataBack();
 
         saveData(savedInstanceState);
-
 
     }
 
@@ -161,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        //Edit quantity value
+        //update sharedPreference
         sharedPreferences.edit().
                 putInt(Constants.COUNT_VAlUE, qty)
                 .apply();
