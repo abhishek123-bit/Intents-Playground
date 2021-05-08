@@ -20,7 +20,8 @@ I have made an Intents Playground application
 <img title="" src="https://github.com/abhishek123-bit/CDN/blob/main/Intents%20Playground/06.png?raw=true" alt="" width="231">
 <img title="" src="https://github.com/abhishek123-bit/CDN/blob/main/Intents%20Playground/07.png?raw=true" alt="" width="231">
 <img title="" src="https://github.com/abhishek123-bit/CDN/blob/main/Intents%20Playground/08.png?raw=true" alt="" width="231">
-<img title="" src="https://github.com/abhishek123-bit/CDN/blob/main/Intents%20Playground/09.png?raw=true" alt="" width="231">
+<img title="" src="https://github.com/abhishek123-bit/CDN/blob/main/Intents%20Playground/09.png?raw=true" alt="" height="231">
+<img title="" src="https://github.com/abhishek123-bit/CDN/blob/main/Intents%20Playground/10.png?raw=true" alt="" width="231">
 
 ## Download the apk
 
